@@ -1,0 +1,37 @@
+{% block content %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<div class="modal-wrapper">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-blue">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><i class="fa fa-pencil"></i> Create New Issue</h4>
+            </div>
+            <form action="{% url 'issues:add_issue' %}" method="post" class="post-form">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field }}
+                    {% endfor %}
+
+                    {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i>
+                        Discard</button>
+                    <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i>
+                        Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
