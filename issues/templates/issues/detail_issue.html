@@ -1,0 +1,43 @@
+{% block content %}
+<div class="modal-wrapper">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-blue">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><i class="fa fa-cog"></i> {{issue.title}}</h4>
+            </div>
+            <form action="#" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="assets/img/user/avatar01.png" class="img-circle" alt="" width="50">
+                        </div>
+                        <div class="col-md-10">
+                            <p>Issue opened by <a href="#">{{issue.author}}</a>
+                                {{issue.create_date}}</p>
+                            <p>{{ issue.description }}
+                        </div>
+                    </div>
+                    {% for comment in issue.comment_set.all %}
+                    <div class="row support-content-comment">
+                        <div class="col-md-2">
+                            <img src="assets/img/user/avatar02.png" class="img-circle" alt="" width="50">
+                        </div>
+                        <div class="col-md-10">
+                            <p>Posted by <a href="#">{{ comment.user.username }}</a> at {{ comment.create_date }}</p>
+                            <p>{{ comment.description }}</p>
+                            <a href="#"><span class="fa fa-reply"></span> &nbsp;Post a
+                                reply</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i>
+                        Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

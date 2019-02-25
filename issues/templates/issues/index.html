@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="content">
+    <div class="row">
+        <!-- BEGIN NAV TICKET -->
+        <div class="col-md-3">
+            <div class="grid support">
+                <div class="grid-body">
+                    <h2>Browse</h2>
+                    <hr>
+                    <ul>
+                        <li class="active"><a href="#">Everyone's Issues<span class="pull-right">{{issues.count}}</span></a></li>
+                        <li><a href="#">Created by you<span class="pull-right"></span></a></li>
+                    </ul>
+                    <hr>
+                    <p><strong>Labels</strong></p>
+                    <ul class="support-label">
+                        <li><a href="#"><span class="bg-blue">&nbsp;</span>&nbsp;&nbsp;&nbsp;bug<span class="pull-right">
+                                    {{issues.type.count}}</span></a></li>
+                        <li><a href="#"><span class="bg-purple">&nbsp;</span>&nbsp;&nbsp;&nbsp;feature<span class="pull-right"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END NAV TICKET -->
+        <!-- BEGIN TICKET -->
+        <div class="col-md-9">
+            <div class="grid support-content">
+                <div class="grid-body">
+                    <h2>Issues</h2>
+                    <hr>
+
+                    <!-- TODO: Add count -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default active">162 Open</button>
+                        <button type="button" class="btn btn-default">95,721 Closed</button>
+                    </div>
+
+                    <!-- TODO: make dynamic select with filtering -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> Sort:
+                            <strong>Votes</strong> <span class="caret"></span></button>
+
+                        <ul class="dropdown-menu fa-padding" role="menu">
+                            <li><a href="#"><i class="fa fa-check"></i> Votes</a></li>
+                            <li><a href="#"><i class="fa"></i> Newest</a></li>
+                            <li><a href="#"><i class="fa"> </i> Oldest</a></li>
+                            <li><a href="#"><i class="fa"> </i> Recently updated</a></li>
+                            <li><a href="#"><i class="fa"> </i> Least recently updated</a></li>
+                            <li><a href="#"><i class="fa"> </i> Most commented</a></li>
+                            <li><a href="#"><i class="fa"> </i> Least commented</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- BEGIN NEW TICKET -->
+                    {% if user.is_authenticated %}
+                    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#newIssue">New
+                        Issue</button>
+                    <div class="modal fade" id="newIssue" tabindex="-1" role="dialog" aria-labelledby="newIssue"
+                        aria-hidden="true">
+                        {% include "issues/add_issue.html" with form=issue_form %}
+                    </div>
+                    {% endif %}
+                    <!-- END NEW TICKET -->
+
+                    <div class="padding"></div>
+
+                    <div class="row">
+                        <!-- BEGIN TICKET CONTENT -->
+                        <div class="col-md-12">
+                            <ul class="list-group fa-padding">
+                                {% if issues %}
+                                {% for issue in issues %}
+                                <!-- {% url 'issues:detail_issue' issue.id %} -->
+                                <li class="list-group-item" data-toggle="modal" data-target="#issue_{{ issue.pk }}">
+                                    <div class="media">
+                                        {% if issue.type.description == "Feature" %}
+                                        <i class="fa fa-code-fork pull-left"></i>
+                                        {% else %}
+                                        <i class="fa fa-cog pull-left"></i>
+                                        {% endif %}
+                                        <div class="media-body">
+                                            <strong>{{ issue.title }}</strong>
+                                            <!-- BADGE FEATURE/BUG -->
+                                            {% if issue.type.description == "Feature" %}
+                                            <span class="badge badge-info">
+                                                {% else %}
+                                                <span class="badge badge-primary">
+                                                    {% endif %}
+                                                    {{ issue.type.description }}
+                                                </span>
+                                                <!-- BADGE STATUS -->
+                                                {% if issue.get_current_status_display == "todo" %}
+                                                <span class="badge badge-danger">
+                                                    {% elif issue.get_current_status_display == "in progress" %}
+                                                    <span class="badge badge-warning">
+                                                        {% elif issue.get_current_status_display == "done" %}
+                                                        <span class="badge badge-success">
+                                                            {% endif %}
+                                                            {{ issue.get_current_status_display }}</span>
+
+                                                        {% if user.is_superuser or user == issue.author %}
+                                                        <span class="pull-right"><a href="{% url 'issues:edit_issue' issue.id %}">Edit
+                                                            </a><a href="{% url 'issues:delete_issue' issue.id %}">
+                                                                Delete</a></span>
+                                                        {% endif %}
+                                                        <p class="info">Opened by <a href="#">{{ issue.author }}</a>
+                                                            {{issue.create_date}} <i class="fa fa-comments"></i>
+                                                            <a href="#">{{ issue.comment_set.count }} comments</a></p>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                                {% else %}
+                                <p>No Issues are available.</p>
+                                {% endif %}
+                            </ul>
+
+                            <!-- BEGIN DETAIL TICKET -->
+                            {% for issue in issues %}
+                            <div id="issue_{{ issue.pk }}" class="modal fade" id="issue" tabindex="-1" role="dialog"
+                                aria-labelledby="issue" aria-hidden="true">
+                                <div class="modal-wrapper">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-blue">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h4 class="modal-title"><i class="fa fa-cog"></i> {{issue.title}}</h4>
+                                            </div>
+                                            <form action="#" method="post">
+                                                <div class="modal-body">
+                                                    <div class="row">
+
+                                                        <div class="col-md-10">
+                                                            <p>Issue opened by <a href="#">{{issue.author}}</a>
+                                                                {{issue.create_date}}</p>
+                                                            <p>{{ issue.description }}
+                                                        </div>
+                                                    </div>
+                                                    {% for comment in issue.comment_set.all %}
+                                                    <div class="row support-content-comment">
+                                                        <div class="col-md-10">
+                                                            <p>Posted by <a href="#">{{ comment.user.username }}</a> at
+                                                                {{ comment.create_date }}</p>
+                                                            <p>{{ comment.description }}</p>
+                                                            <a href="#"><span class="fa fa-reply"></span> &nbsp;Post a
+                                                                reply</a>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                                                            class="fa fa-times"></i>
+                                                        Close</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <!-- END DETAIL TICKET -->
+                        </div>
+                        <!-- END TICKET CONTENT -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END TICKET -->
+    </div>
+</section>
+
+{% endblock %}
