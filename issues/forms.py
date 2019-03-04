@@ -38,9 +38,6 @@ class EditIssueForm(forms.ModelForm):
         }
 
 
-<< << << < HEAD
-
-
 class NewCommentForm(forms.Form):
 
 
