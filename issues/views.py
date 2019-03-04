@@ -1,4 +1,4 @@
-from .forms import NewIssueForm, EditIssueForm, CommentForm
+from .forms import NewIssueForm, EditIssueForm, NewCommentForm
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect, reverse
 from .models import Issue, Type, User
