@@ -1,18 +1,16 @@
-from .forms import NewIssueForm, EditIssueForm, NewCommentForm
+from .forms import NewIssueForm, EditIssueForm, CommentForm
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render, redirect, reverse
 from .models import Issue, Type, User
 from django.utils import timezone
 from django.contrib.auth.models import User
-from .filters import IssueFilter
 # Create your views here.
 
 
 def index(request):
-    all_issues = IssueFilter(request.GET, queryset=Issue.objects.all())
+    all_issues = Issue.objects.order_by('-vote_amount')
     issue_form = NewIssueForm()
-    comment_form = NewCommentForm()
-    return render(request, 'issues/index.html', {'issues': all_issues, 'issue_form': issue_form, 'comment_form': comment_form})
+    return render(request, 'issues/index.html', {'issues': all_issues, 'issue_form': issue_form})
 
 
 def detail_issue(request, issue_id):
@@ -47,13 +45,4 @@ def add_issue(request):
         issue.author = request.user
         issue.current_status = 'todo'
         issue.save()
-        return redirect('issues:index')
-
-
-def add_comment(request):
-    form = NewCommentForm(request.POST or None)
-    if form.is_valid():
-        comment = form.save(commit=False)
-        comment.user = request.user
-        comment.save()
         return redirect('issues:index')
