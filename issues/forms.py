@@ -1,5 +1,5 @@
 from django import forms
-from .models import Issue
+from .models import Issue, Comment
 
 
 class NewIssueForm(forms.ModelForm):
@@ -38,5 +38,5 @@ class EditIssueForm(forms.ModelForm):
         }
 
 
-class CommentForm(forms.Form):
+class NewCommentForm(forms.Form):
     comment = forms.CharField(required=True, widget=forms.Textarea)

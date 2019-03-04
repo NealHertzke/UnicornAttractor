@@ -30,8 +30,7 @@ class Issue(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
-    issue = models.ForeignKey(
-        Issue, on_delete=models.PROTECT)
+    issue = models.ForeignKey(Issue, on_delete=models.PROTECT)
     description = models.CharField(max_length=1500)
     vote_amount = models.IntegerField(default=0)
     create_date = models.DateTimeField(default=timezone.now)

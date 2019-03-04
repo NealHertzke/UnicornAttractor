@@ -18,7 +18,7 @@
                     <ul class="support-label">
                         <li><a href="#"><span class="bg-blue">&nbsp;</span>&nbsp;&nbsp;&nbsp;bug<span class="pull-right">
                                     {{issues.type.count}}</span></a></li>
-                        <li><a href="#"><span class="bg-purple">&nbsp;</span>&nbsp;&nbsp;&nbsp;feature<span class="pull-right"></span></a></li>
+                        <li><a href="#"><span class="bg-teal">&nbsp;</span>&nbsp;&nbsp;&nbsp;feature<span class="pull-right"></span></a></li>
                     </ul>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                         <div class="col-md-12">
                             <ul class="list-group fa-padding">
                                 {% if issues %}
-                                {% for issue in issues %}
+                                {% for issue in issues.qs %}
                                 <!-- {% url 'issues:detail_issue' issue.id %} -->
                                 <li class="list-group-item" data-toggle="modal" data-target="#issue_{{ issue.pk }}">
                                     <div class="media">
@@ -85,29 +85,35 @@
                                             <!-- BADGE FEATURE/BUG -->
                                             {% if issue.type.description == "Feature" %}
                                             <span class="badge badge-info">
-                                                {% else %}
-                                                <span class="badge badge-primary">
-                                                    {% endif %}
-                                                    {{ issue.type.description }}
-                                                </span>
-                                                <!-- BADGE STATUS -->
-                                                {% if issue.get_current_status_display == "todo" %}
-                                                <span class="badge badge-danger">
-                                                    {% elif issue.get_current_status_display == "in progress" %}
-                                                    <span class="badge badge-warning">
-                                                        {% elif issue.get_current_status_display == "done" %}
-                                                        <span class="badge badge-success">
-                                                            {% endif %}
-                                                            {{ issue.get_current_status_display }}</span>
-
-                                                        {% if user.is_superuser or user == issue.author %}
-                                                        <span class="pull-right"><a href="{% url 'issues:edit_issue' issue.id %}">Edit
-                                                            </a><a href="{% url 'issues:delete_issue' issue.id %}">
-                                                                Delete</a></span>
-                                                        {% endif %}
-                                                        <p class="info">Opened by <a href="#">{{ issue.author }}</a>
-                                                            {{issue.create_date}} <i class="fa fa-comments"></i>
-                                                            <a href="#">{{ issue.comment_set.count }} comments</a></p>
+                                            {% else %}
+                                            <span class="badge badge-primary">
+                                            {% endif %}
+                                                {{ issue.type.description }}
+                                            </span>
+                                            <!-- BADGE STATUS -->
+                                            {% if issue.get_current_status_display == "todo" %}
+                                            <span class="badge badge-danger">
+                                            {% elif issue.get_current_status_display == "in progress" %}
+                                            <span class="badge badge-warning">
+                                            {% elif issue.get_current_status_display == "done" %}
+                                            <span class="badge badge-success">
+                                            {% endif %}
+                                                {{ issue.get_current_status_display }}
+                                            </span>
+                                            <!-- EDIT AND DELETE BUTTONS -->
+                                            {% if user.is_superuser or user == issue.author %}
+                                            <span class="pull-right">
+                                                <a href="{% url 'issues:edit_issue' issue.id %}">Edit</a>
+                                                <a href="{% url 'issues:delete_issue' issue.id %}">Delete</a>
+                                            </span>
+                                            {% endif %}
+                                            <!-- ISSUE INFO -->
+                                            <p class="info">Opened by 
+                                                <a href="#">{{ issue.author }}</a>
+                                                {{issue.create_date}} 
+                                                <i class="fa fa-comments"></i>
+                                                <a href="#">{{ issue.comment_set.count }} comments</a>
+                                            </p>
                                         </div>
                                     </div>
                                 </li>
@@ -118,7 +124,7 @@
                             </ul>
 
                             <!-- BEGIN DETAIL TICKET -->
-                            {% for issue in issues %}
+                            {% for issue in issues.qs %}
                             <div id="issue_{{ issue.pk }}" class="modal fade" id="issue" tabindex="-1" role="dialog"
                                 aria-labelledby="issue" aria-hidden="true">
                                 <div class="modal-wrapper">
@@ -131,29 +137,26 @@
                                             <form action="#" method="post">
                                                 <div class="modal-body">
                                                     <div class="row">
-
                                                         <div class="col-md-10">
-                                                            <p>Issue opened by <a href="#">{{issue.author}}</a>
-                                                                {{issue.create_date}}</p>
-                                                            <p>{{ issue.description }}
+                                                            <p>Issue opened by <a href="#">{{issue.author}}</a> {{issue.create_date}}</p>
+                                                            <p>{{ issue.description }}</p>
                                                         </div>
                                                     </div>
                                                     {% for comment in issue.comment_set.all %}
                                                     <div class="row support-content-comment">
                                                         <div class="col-md-10">
-                                                            <p>Posted by <a href="#">{{ comment.user.username }}</a> at
-                                                                {{ comment.create_date }}</p>
+                                                            <p>Posted by <a href="#">{{ comment.user.username }}</a> at {{ comment.create_date }}</p>
                                                             <p>{{ comment.description }}</p>
-                                                            <a href="#"><span class="fa fa-reply"></span> &nbsp;Post a
-                                                                reply</a>
+                                                            <a href="#"><span class="fa fa-reply"></span> &nbsp;Post a reply</a>
                                                         </div>
                                                     </div>
                                                     {% endfor %}
+                                                    {% include "issues/add_comment.html" with form=comment_form %}
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i
-                                                            class="fa fa-times"></i>
-                                                        Close</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                        <i class="fa fa-times"></i>Close
+                                                    </button>
                                                 </div>
                                             </form>
                                         </div>
