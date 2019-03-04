@@ -39,4 +39,13 @@ class EditIssueForm(forms.ModelForm):
 
 
 class NewCommentForm(forms.Form):
-    comment = forms.CharField(required=True, widget=forms.Textarea)
+
+
+== == == =
+
+
+class CommentForm(forms.Form):
+
+
+>>>>>> > b4a81a3cca4614f8358e2065f5720c0f43ee092c
+comment = forms.CharField(required=True, widget=forms.Textarea)
