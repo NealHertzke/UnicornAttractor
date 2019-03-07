@@ -15,8 +15,8 @@ class Issue(models.Model):
         ('done', 'done')
     )
 
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
-    type = models.ForeignKey(Type, on_delete=models.PROTECT)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    type = models.ForeignKey(Type, on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
     description = models.CharField(max_length=1500)
     current_status = models.CharField(
@@ -29,7 +29,7 @@ class Issue(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     issue = models.ForeignKey(
         Issue, on_delete=models.PROTECT)
     description = models.CharField(max_length=1500)

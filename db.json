@@ -1,0 +1,205 @@
+[{
+    "model": "issues.type",
+    "pk": 1,
+    "fields": {
+      "description": "Bug"
+    }
+  },
+  {
+    "model": "issues.type",
+    "pk": 2,
+    "fields": {
+      "description": "Feature"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$120000$f95g4C7Lzv4o$rcITyu6rsuQfDsRKt7gsDlA0OuVjnHjkuM0VxLMy6J0=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "brent.molenberghs4@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2019-02-12T14:44:00.063Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$120000$SEpG3VQblgZX$QXfI8GfHt4FqkTIQRfsxDR4LRcHpSCG0aIms/L0NwL8=",
+      "last_login": "2019-02-25T21:21:40.710Z",
+      "is_superuser": false,
+      "username": "CrimsonBehelit",
+      "first_name": "",
+      "last_name": "",
+      "email": "brent.molenberghs4@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2019-02-13T15:53:29Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$120000$TmkMxYTWEH7O$txq9lwr476SeUqK4fHGvY903421jeQwrwl4naCwX22Y=",
+      "last_login": "2019-02-28T08:13:10.194Z",
+      "is_superuser": true,
+      "username": "synncloud",
+      "first_name": "",
+      "last_name": "",
+      "email": "nealhertzke@hotmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2019-02-25T21:23:53.671Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "dc12un2bhvs3s85zmtgn4943k2th18cw",
+    "fields": {
+      "session_data": "MDY5NWYxMWQwY2Y0MTk4ZDM3ZTBkNDJkNTA4NGM4Y2JkYzg2MTljZTp7Il9hdXRoX3VzZXJfaWQiOiIzIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJhMDdhNzU1OGJjNmZjYjExY2JkMWE4ZmQ0MjdhM2UzM2ZhZGI2OTAzIn0=",
+      "expire_date": "2019-03-14T08:13:10.204Z"
+    }
+  },
+  {
+    "model": "issues.comment",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "issue": 1,
+      "description": "That sucks",
+      "vote_amount": 2,
+      "create_date": "2019-02-14T09:42:32Z"
+    }
+  },
+  {
+    "model": "issues.issue",
+    "pk": 1,
+    "fields": {
+      "author": 1,
+      "type": 1,
+      "title": "This doesn't work",
+      "description": "it really doesn't",
+      "current_status": "todo",
+      "vote_amount": 0,
+      "create_date": "2019-02-06T06:00:00Z"
+    }
+  },
+  {
+    "model": "issues.issue",
+    "pk": 2,
+    "fields": {
+      "author": 1,
+      "type": 2,
+      "title": "This would be cool",
+      "description": "this is the description of a cool feature",
+      "current_status": "todo",
+      "vote_amount": 3,
+      "create_date": "2019-02-14T06:00:00Z"
+    }
+  },
+  {
+    "model": "issues.issue",
+    "pk": 14,
+    "fields": {
+      "author": 2,
+      "type": 1,
+      "title": "Can't login",
+      "description": "I tried multiple solutions",
+      "current_status": "done",
+      "vote_amount": 0,
+      "create_date": "2019-02-25T15:20:14.677Z"
+    }
+  },
+  {
+    "model": "issues.issue",
+    "pk": 22,
+    "fields": {
+      "author": 3,
+      "type": 1,
+      "title": "Can't properly edit issues",
+      "description": "It doesn't work",
+      "current_status": "done",
+      "vote_amount": 0,
+      "create_date": "2019-02-25T22:03:10.767Z"
+    }
+  },
+  {
+    "model": "issues.issue",
+    "pk": 24,
+    "fields": {
+      "author": 3,
+      "type": 1,
+      "title": "Names of issue type doesn't show up",
+      "description": "it just shows a vague name",
+      "current_status": "in progress",
+      "vote_amount": 0,
+      "create_date": "2019-02-25T22:23:31.097Z"
+    }
+  },
+  {
+    "model": "issues.issue",
+    "pk": 25,
+    "fields": {
+      "author": 3,
+      "type": 2,
+      "title": "Graphs",
+      "description": "Graphs would be amazing",
+      "current_status": "todo",
+      "vote_amount": 0,
+      "create_date": "2019-02-25T22:24:13.825Z"
+    }
+  },
+  {
+    "model": "issues.issue",
+    "pk": 26,
+    "fields": {
+      "author": 3,
+      "type": 2,
+      "title": "Paying for upvoting",
+      "description": "I wish we could pay for upvoting, hell, why not even for making this post.",
+      "current_status": "todo",
+      "vote_amount": 0,
+      "create_date": "2019-02-25T22:24:53.844Z"
+    }
+  },
+  {
+    "model": "issues.issue",
+    "pk": 27,
+    "fields": {
+      "author": 3,
+      "type": 1,
+      "title": "Filtering doesn't work",
+      "description": "Most of the filtering doesn't seem to work.",
+      "current_status": "todo",
+      "vote_amount": 0,
+      "create_date": "2019-02-25T22:25:39.012Z"
+    }
+  },
+  {
+    "model": "issues.issue",
+    "pk": 28,
+    "fields": {
+      "author": 3,
+      "type": 1,
+      "title": "Can't post comments",
+      "description": "Clicking does nothing.",
+      "current_status": "todo",
+      "vote_amount": 0,
+      "create_date": "2019-02-25T22:28:46.219Z"
+    }
+  }
+]

@@ -102,8 +102,9 @@
 
                                                         {% if user.is_superuser or user == issue.author %}
                                                         <span class="pull-right"><a href="{% url 'issues:edit_issue' issue.id %}">Edit
-                                                            </a><a href="{% url 'issues:delete_issue' issue.id %}">
-                                                                Delete</a></span>
+                                                            </a>
+                                                            <a href="{% url 'issues:delete_issue' issue.id %}">Delete</a>
+                                                            </span>
                                                         {% endif %}
                                                         <p class="info">Opened by <a href="#">{{ issue.author }}</a>
                                                             {{issue.create_date}} <i class="fa fa-comments"></i>
